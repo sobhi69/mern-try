@@ -25,9 +25,9 @@ const Home: FC<HomeProps> = ({ }) => {
     }
     try {
       const response = await axiosInstance.post('/banana', bananaData)
-      setBananas(prev => {
-        return [...prev, response.data]
-      })
+      alert(response.data)
+      alert('done')
+      setBananaData({ 'bananaColor': "", "bananaName": "" })
     } catch (error) {
       alert(error)
     }
