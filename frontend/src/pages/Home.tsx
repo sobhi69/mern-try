@@ -9,6 +9,8 @@ interface HomeProps {
 
 
 const Home: FC<HomeProps> = ({ }) => {
+
+  const [bananas, setBananas] = useState<BananaForm[]>([])
   const [bananaData, setBananaData] = useState<BananaForm>({
     "bananaName": "",
     'bananaColor': ""
@@ -22,7 +24,10 @@ const Home: FC<HomeProps> = ({ }) => {
       return
     }
     try {
-      await axiosInstance.post('/banana', bananaData)
+      const response = await axiosInstance.post('/banana', bananaData)
+      setBananas(prev => {
+        return [...prev, response.data]
+      })
     } catch (error) {
       alert(error)
     }
@@ -54,6 +59,14 @@ const Home: FC<HomeProps> = ({ }) => {
           </div>
           <button type="submit">Create</button>
         </form>
+
+      </div>
+      <div>
+        <h1>bananas</h1>
+        {!bananas.length && ' no bananas to render'}
+        {bananas.map((bana, index) => (
+          <div key={index}>{bana.bananaName}</div>
+        ))}
       </div>
 
     </div>
