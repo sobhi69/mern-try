@@ -1,4 +1,4 @@
-import { FC, FormEvent, useState } from "react";
+import { FC, FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
 import BananaForm from "../interfaces/BananaForm";
@@ -11,6 +11,21 @@ interface HomeProps {
 const Home: FC<HomeProps> = ({ }) => {
 
   const [bananas, setBananas] = useState<BananaForm[]>([])
+
+  useEffect(() => {
+    const getBanans = async () => {
+      try {
+        const response = await axiosInstance.get('/banana/get-bananas')
+        setBananas(response.data)
+      } catch (error) {
+        alert(error)
+      }
+    }
+
+    getBanans()
+    return
+  }, [])
+
   const [bananaData, setBananaData] = useState<BananaForm>({
     "bananaName": "",
     'bananaColor': ""
@@ -27,7 +42,7 @@ const Home: FC<HomeProps> = ({ }) => {
       const response = await axiosInstance.post('/banana', bananaData)
       alert(response.data)
       alert('done')
-      setBananaData({ 'bananaColor': "", "bananaName": "" })
+      setBananaData({ 'bananaColor': "", bananaName: "" })
     } catch (error) {
       alert(error)
     }

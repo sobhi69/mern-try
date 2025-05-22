@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const connectToDB_1 = require("./lib/connectToDb");
+const connect_1 = require("./lib/connect");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -17,8 +17,8 @@ const item_1 = __importDefault(require("./routes/item"));
 const banana_1 = __importDefault(require("./routes/banana"));
 app.use('/item', item_1.default);
 app.use('/banana', banana_1.default);
-(0, connectToDB_1.connectToDb)();
-connectToDB_1.connection.once('open', () => {
+(0, connect_1.connectToDb)();
+connect_1.connection.once('open', () => {
     console.log(`connected to DB`);
     app.listen(port, () => console.log(`app is alive at http://localhost:${port}`));
 });

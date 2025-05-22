@@ -12,30 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllBananas = exports.createBanana = void 0;
-const banana_1 = __importDefault(require("../model/banana"));
-const createBanana = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { bananaColor, bananaName } = req.body;
-    const newBanana = yield banana_1.default.create({
-        bananaColor,
-        bananaName
-    });
+exports.connection = exports.connectToDb = void 0;
+const mongoose_1 = __importDefault(require("mongoose"));
+const connectToDb = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.status(201).json(newBanana);
+        yield mongoose_1.default.connect(process.env.DATABASE_URI || 'mongodb+srv://127.0.0.1:27017/myapp');
     }
     catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error(`error connectToDb ${error}`);
     }
 });
-exports.createBanana = createBanana;
-const getAllBananas = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const allBananas = yield banana_1.default.find().sort();
-        res.json(allBananas);
-    }
-    catch (error) {
-        console.error(`error in getAllbananas ${error}`);
-        res.status(500).json({ message: error.message });
-    }
-});
-exports.getAllBananas = getAllBananas;
+exports.connectToDb = connectToDb;
+exports.connection = mongoose_1.default.connection;

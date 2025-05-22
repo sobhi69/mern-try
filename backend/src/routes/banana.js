@@ -7,4 +7,5 @@ const express_1 = __importDefault(require("express"));
 const banana_1 = require("../controllers/banana");
 const router = express_1.default.Router();
 router.post('/', banana_1.createBanana);
+router.get('/get-bananas', banana_1.getAllBananas);
 exports.default = router;
