@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    baseURL:"https://mern-try-production.up.railway.app"
+    baseURL: import.meta.env.MODE == 'production' ? "https://mern-try-production.up.railway.app" :
+    'http://localhost:3040'
 })
 
 
